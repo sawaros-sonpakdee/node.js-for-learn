@@ -1,6 +1,6 @@
 function calculate(x,y,callback){
     setTimeout(()=>{
-        console.log("กำลังคำนวณ....")
+        // console.log("กำลังคำนวณ....")
         const sum = x+y 
         callback(sum)
     },3000)
@@ -16,4 +16,6 @@ function display(result){
 
 
 //callback function
-calculate(100,50,display)
+calculate(100,50,function(result){
+    console.log(`ผลบวก = ${result}`)
+})
