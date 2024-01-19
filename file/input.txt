@@ -1,0 +1,4 @@
+
+Example of file:
+
+Hello,my name is Sawaros Sonpakdee. I'm a developper.

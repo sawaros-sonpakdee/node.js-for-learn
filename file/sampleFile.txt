@@ -1,7 +1,0 @@
-Hello Node.js
-Hello Node.js
-Example of file:
-
-Hello,my name is Sawaros Sonpakdee. I'm a developper.
-ไฟล์ถูกเขียนเมื่อ Fri Jan 19 2024 20:12:49 GMT+0700 (GMT+07:00)
-ไฟล์ถูกเขียนเมื่อ Fri Jan 19 2024 20:13:25 GMT+0700 (GMT+07:00)
