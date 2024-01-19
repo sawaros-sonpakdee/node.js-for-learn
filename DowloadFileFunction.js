@@ -14,7 +14,7 @@ function dowloading(url1,callback){
 function complete(){
     console.log(`ดาวน์โหลด ${url1} เรียบร้อย!`)
 }
-
+  
 
 // dowloading(url1,complete)
 // complete()
