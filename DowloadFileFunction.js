@@ -23,3 +23,5 @@ function complete(){
 dowloading(url1,function(result){
     console.log(`ดาวน์โหลด ${result} เรียบร้อย`)
 })
+
+///..
