@@ -35,8 +35,8 @@ const http = require('http')
 const server = http.createServer((req, res) => {
     const myhtml = `
     <h1>Hello Node.js update</h1>
-    <p>By Sawaros Sonpakdee</p>`
-    
+    <p style="color:blue">By Sawaros Sonpakdee</p>`
+
     res.write(myhtml)//ถ้ามีการเปลี่ยนแปลงข้อมูล ต้อง restart server
     res.end()//บอกจุดสิ้นสุดในการรับ-ส่งข้อมูล
 })
