@@ -1,6 +1,7 @@
 //สร้าง web server
 
 const http = require('http')
+const path = require('path')
 
 // //สร้าง server(callback function(request,respon))
 // const server = http.createServer(function(req,res){
@@ -31,13 +32,31 @@ const http = require('http')
 
 
 
-//****การ respon ข้อมูล */
-const server = http.createServer((req, res) => {
-    const myhtml = `
-    <h1>Hello Node.js update</h1>
-    <p style="color:blue">By Sawaros Sonpakdee</p>`
+// //****การ respon ข้อมูล */
+// const server = http.createServer((req, res) => {
+//     const myhtml = `
+//     <h1>Hello Node.js update</h1>
+//     <p style="color:blßue">By Sawaros Sonpakdee</p>`
 
-    res.write(myhtml)//ถ้ามีการเปลี่ยนแปลงข้อมูล ต้อง restart server
+//     res.write(myhtml)//ถ้ามีการเปลี่ยนแปลงข้อมูล ต้อง restart server
+//     res.end()//บอกจุดสิ้นสุดในการรับ-ส่งข้อมูล
+// })
+// server.listen(8080,'localhost',()=>{
+//     console.log("start server in port 8080")
+// })
+
+
+//****การ routing  */
+const server = http.createServer((req, res) => {
+    const pathName = req.url
+    console.log("url = ",req)
+    if(pathName === "/" || pathName === "/home"){
+        const myhtml = `
+        <h1>Hello Node.js update</h1>
+        <p style="color:blue">By Sawaros Sonpakdee</p>`
+        res.write(myhtml)//ถ้ามีการเปลี่ยนแปลงข้อมูล ต้อง restart server
+    }
+  
     res.end()//บอกจุดสิ้นสุดในการรับ-ส่งข้อมูล
 })
 server.listen(8080,'localhost',()=>{
