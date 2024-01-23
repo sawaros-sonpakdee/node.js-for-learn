@@ -1,8 +1,9 @@
 //สร้าง web server
 
 const http = require('http')
-const path = require('path')
-const fs = require('fs')
+const pathName = require('path')
+const fs = require('fs') 
+const url = require('url')
 
 // ระบุตำแหน่งไฟล์  
 const indexPage = fs.readFileSync(`${__dirname}/templates/index.html`,`utf-8`)
@@ -53,8 +54,10 @@ const productPage = fs.readFileSync(`${__dirname}/templates/product1.html`,`utf-
 
 //****การ routing  */
 const server = http.createServer((req, res) => {
-    const pathName = req.url
-    console.log("url = ",req)
+
+    console.log(url.parse(req.url,true))
+     
+    // console.log("url = ",req)
     if(pathName === "/" || pathName === "/home"){
        res.end(indexPage)
     }
