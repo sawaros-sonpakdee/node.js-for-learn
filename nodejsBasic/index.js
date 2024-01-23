@@ -56,6 +56,14 @@ const server = http.createServer((req, res) => {
         <p style="color:blue">By Sawaros Sonpakdee</p>`
         res.write(myhtml)//ถ้ามีการเปลี่ยนแปลงข้อมูล ต้อง restart server
     }
+    else if(pathName === "/product"){
+        res.end("<h1>Hello Product</h1>")
+    }
+    else{
+        res.writeHead(404)
+        res.end("<h1>Not Found</h1>")
+    }
+    
   
     res.end()//บอกจุดสิ้นสุดในการรับ-ส่งข้อมูล
 })
