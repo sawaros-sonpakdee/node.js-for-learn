@@ -5,9 +5,9 @@ const path = require('path')
 const fs = require('fs')
 
 // ระบุตำแหน่งไฟล์  
-const indexPage = fs.readFileSync(`${__dirname}/templates/index.html`)
+const indexPage = fs.readFileSync(`${__dirname}/templates/index.html`,`utf-8`)
 
-const productPage = fs.readFileSync(`${__dirname}/templates/product1.html`)
+const productPage = fs.readFileSync(`${__dirname}/templates/product1.html`,`utf-8`)
 
 // const server = http.createServer(function(req,res){
 //     res.write("Hello Node.js update")//ถ้ามีการเปลี่ยนแปลงข้อมูล ต้อง restart server
