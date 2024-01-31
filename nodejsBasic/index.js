@@ -92,12 +92,34 @@
 //     console.log("start server in port 8080")
 // })
 
+// const express = require('express')
+// const app = express()
+
+// // (ต้องเขียนก่อน listen)
+// app.use("/product",(req,res)=>{
+//     res.send('<h2>Hello express.js | 2023</h2>')
+// })
+// app.listen(8080,()=>{
+//     console.log('run server on port 8080')
+// })
+
+
+//***เรียกใช้ไฟล์ html ร่วมกับ node.js (module  path)
 const express = require('express')
+const path = require('path')
 const app = express()
 
-// (ต้องเขียนก่อน listen)
-app.use((req,res)=>{
-    res.send('<h2>Hello express.js</h2>')
+//อ้างอิงตำแหน่งไฟล์
+const indexPage = path.join(__dirname,"templates/index.html")
+
+app.get("/",(req,res)=>{
+    //send details of file
+    res.status(200)
+    res.type('text/html')
+    res.sendFile(indexPage)
+})
+app.use("/product",(req,res)=>{
+    res.send('<h2>Hello express.js | 2023</h2>')
 })
 app.listen(8080,()=>{
     console.log('run server on port 8080')
