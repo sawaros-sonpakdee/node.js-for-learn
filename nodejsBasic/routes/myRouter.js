@@ -27,8 +27,9 @@ router.use("/product/:id", (req, res) => {
         res.sendFile(path.join(__dirname, "../templates/product3.html"))
     }
     else{
-        res.status(404)
-        res.send("<h1>Page Not Found</h1>")
+        // res.status(404)
+        // res.send("<h1>Page Not Found</h1>")
+        res.redirect('/')
     }
 
 })
