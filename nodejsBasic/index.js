@@ -104,23 +104,52 @@
 // })
 
 
-//***เรียกใช้ไฟล์ html ร่วมกับ node.js (module  path)
+// //***เรียกใช้ไฟล์ html ร่วมกับ node.js (module  path)
+// const express = require('express')
+// const path = require('path')
+// const app = express()
+
+// //อ้างอิงตำแหน่งไฟล์
+// const indexPage = path.join(__dirname,"templates/index.html")
+
+// app.get("/",(req,res)=>{
+//     //send details of file
+//     res.status(200)
+//     res.type('text/html')
+//     res.sendFile(indexPage)
+// })
+// app.use("/product",(req,res)=>{
+//     res.status(200)
+//     res.type('text/html')
+//     res.sendFile(path.join(__dirname,"templates/product1.html"))
+// })
+// app.listen(8080,()=>{
+//     console.log('run server on port 8080')
+// })
+
+
+//***ในกรณีที่มีหลายเส้นทาง
 const express = require('express')
+const router = express.Router()
 const path = require('path')
 const app = express()
 
 //อ้างอิงตำแหน่งไฟล์
 const indexPage = path.join(__dirname,"templates/index.html")
 
-app.get("/",(req,res)=>{
+router.get("/",(req,res)=>{
     //send details of file
     res.status(200)
     res.type('text/html')
     res.sendFile(indexPage)
 })
-app.use("/product",(req,res)=>{
-    res.send('<h2>Hello express.js | 2023</h2>')
+router.use("/product",(req,res)=>{
+    res.status(200)
+    res.type('text/html')
+    res.sendFile(path.join(__dirname,"templates/product1.html"))
 })
+app.use(router)
+
 app.listen(8080,()=>{
     console.log('run server on port 8080')
 })
