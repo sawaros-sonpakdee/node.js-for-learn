@@ -171,7 +171,7 @@
 const express = require(`express`)
 const path = require(`path`)
 const app = express()
-app.use(express.static(path.join(__dirname,'public')))
+app.use(express.static(path.join(__dirname,'public')))//static file ถูกเก็บไว้ในโฟลเดอร์  public 
 app.listen(8080,()=>{
     console.log("รัน server ที่ port 8080")
 })
