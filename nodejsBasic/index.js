@@ -110,7 +110,7 @@
 // const app = express()
 
 // //อ้างอิงตำแหน่งไฟล์
-// const indexPage =  path.join(__dirname,"templates/index.html")
+// const indexPage = path.join(__dirname,"templates/index.html")
 
 // app.get("/",(req,res)=>{
 //     //send details of file
@@ -156,13 +156,20 @@
 
 
 
-//**Routing */
-const express = require('express')
-const router = require('./routes/myRouter.js')
+// //**Routing */
+// const express = require('express')
+// const router = require('./routes/myRouter.js')
 
+// const app = express()
+// app.use(router)
+
+// app.listen(8080,()=>{
+//     console.log("Run server at port 8080")
+// })
+
+
+const express = require(`express`)
 const app = express()
-app.use(router)
-
 app.listen(8080,()=>{
-    console.log("Run server at port 8080")
+    console.log("รัน server ที่ port 8080")
 })
