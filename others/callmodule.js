@@ -1,4 +1,4 @@
-const mymodules =  require('./modules/myModules.js')
+const mymodules =  require('../modules/myModules.js')
 const number = 500000000
 
 // const getCurrentTime = require('./modules/myModules.js').getCurrentTime
