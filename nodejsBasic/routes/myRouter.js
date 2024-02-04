@@ -42,6 +42,6 @@ const router = express.Router()
 
 router.get('/',(req,res)=>{
     const name = "send propperty data"
-    res.render('index.ejs',{data:name,age:24})
+    res.render('index.ejs',{data:name,age:18})
 })
 module.exports = router
