@@ -41,7 +41,10 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/',(req,res)=>{
-    const name = "send propperty data"
-    res.render('index.ejs',{data:name,age:18})
+    // const name = "send propperty data"
+    // res.render('index.ejs',{data:name,age:18})
+
+    const products = ["เสื้อ","พัดลม","หูฟัง","คีย์บอร์ด"]
+    res.render('index',{products:products})
 })
 module.exports = router

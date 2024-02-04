@@ -7,6 +7,7 @@
   </head>
 
   <body>
+   <!-- <%/*%> 
     <h1>test template ejs</h1>
     <b>name: <%= data%></b>
     <br />
@@ -16,6 +17,24 @@
     <h1>อายุผ่านเกณฑ์การใช้งาน</h1>
     <% } else {%>
     <h1>อายุไม่ผ่านเกณฑ์การใช้งาน</h1>
+    <%}%>
+    <hr>
+    <% for(i=1;i<=10;i++){%>
+        <p>ลำดับที่ <%= i%></p>
+    <%}%>
+    <%*/%>  -->
+
+    <p><%= products %></p>
+    <%/*%> <p><%= products[1] %></p> <%*/%> 
+
+    <% for(i=0;i<=products.length;i++){%>
+        <p> <%= products[i] %></p>
+    <%}%>
+
+    <hr>
+    <p>for if</p>
+    <% for(index in products){%>
+        <p> <%= products[index] %></p>
     <%}%>
   </body>
 </html>
