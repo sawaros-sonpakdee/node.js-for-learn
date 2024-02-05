@@ -25,7 +25,7 @@
 //     }
 //     else if(productID === "3") {
 //         res.sendFile(path.join(__dirname, "../templates/product3.html"))
-//     }
+//     } 
 //     else{
 //         // res.status(404)
 //         // res.send("<h1>Page Not Found</h1>")
@@ -41,10 +41,18 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/',(req,res)=>{
-    // const name = "send propperty data"
+    const name_data = "send propperty data"
     // res.render('index.ejs',{data:name,age:18})
 
-    const products = ["เสื้อ","พัดลม","หูฟัง","คีย์บอร์ด"]
-    res.render('index',{products:products})
+    // const products = ["เสื้อ","พัดลม","หูฟัง","คีย์บอร์ด"]
+    // res.render('index',{products:products})
+
+    const products = [ 
+        {name:"เสื้อผ้า",price:500,image:"images/products/product1.png"},
+        {name:"เสื้อ",price:200,image:"images/products/product2.png"},
+        {name:"พัดลม",price:30000,image:"images/products/product3.png"}
+    ]
+    res.render('index',{products:products})  
+    
 })
 module.exports = router
