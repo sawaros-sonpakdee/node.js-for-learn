@@ -77,5 +77,9 @@ router.get('/addForm',(req,res)=>{
 router.get('/manage',(req,res)=>{
     res.render('manage')
 })
+router.get('/insert',(req,res)=>{
+    console.log(req.query )
+    res.render('form')
+})
 
 module.exports = router
