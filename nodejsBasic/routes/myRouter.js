@@ -68,8 +68,8 @@ router.get('/',(req,res)=>{
         {name:"พัดลม",price:30000,image:"images/products/product3.png"}
     ]
     res.render('index',{products:products})  
-    
 })
+
 router.get('/addForm',(req,res)=>{
     res.render('form')
 })
@@ -77,8 +77,14 @@ router.get('/addForm',(req,res)=>{
 router.get('/manage',(req,res)=>{
     res.render('manage')
 })
-router.get('/insert',(req,res)=>{
-    console.log(req.query )
+
+// router.get('/insert',(req,res)=>{
+//     console.log(req.query )
+//     res.render('form')
+// })
+
+router.post('/insert',(req,res)=>{
+    console.log(req.body )
     res.render('form')
 })
 
