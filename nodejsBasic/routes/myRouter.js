@@ -59,6 +59,7 @@
 
 const express = require('express')
 const router = express.Router()
+const Product = require('../models/products')
 
 router.get('/',(req,res)=>{
     const name_data = "send propperty data"
@@ -84,8 +85,24 @@ router.get('/manage',(req,res)=>{
 // })
 
 router.post('/insert',(req,res)=>{
-    console.log(req.body )
-    res.render('form')
+    // console.log("test send POST method")
+    // console.log(req.body.name);
+    // console.log(req.body.price);
+    // console.log(req.body.image);
+    // console.log(req.body.description);
+    let data = new Product({
+        name:req.body.name,
+        price:req.body.price,
+        image:req.body.image,
+        description:req.body.description
+    })
+    Product.saveProduct(data,(err)=>{
+        if(err){console.log(err)} 
+        res.redirect('/')
+    })
+    // console.log(data)
+    // res.render('form')
+
 })
 
 module.exports = router
