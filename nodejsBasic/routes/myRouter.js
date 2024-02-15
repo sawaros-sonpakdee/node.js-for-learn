@@ -102,8 +102,14 @@ router.get('/addForm', (req, res) => {
     res.render('form')
 })
 
-router.get('/manage', (req, res) => {
-    res.render('manage')
+router.get('/manage',async (req, res) => {
+    try {
+        const doc = await Product.find().exec();
+        res.render('manage',{products:doc})
+      } catch (error) {
+        console.error(error);
+      }
+
 })
 
 // router.get('/insert',(req,res)=>{
