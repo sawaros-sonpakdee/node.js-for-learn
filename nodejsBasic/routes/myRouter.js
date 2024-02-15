@@ -53,7 +53,7 @@
 //         {name:"พัดลม",price:30000,image:"images/products/product3.png"}
 //     ]
 //     res.render('index',{products:products})  
-    
+
 // })
 // module.exports = router
 
@@ -61,21 +61,21 @@ const express = require('express')
 const router = express.Router()
 const Product = require('../models/products')
 
-router.get('/',(req,res)=>{
+router.get('/', (req, res) => {
     const name_data = "send propperty data"
-    const products = [ 
-        {name:"เสื้อผ้า",price:500,image:"images/products/product1.png"},
-        {name:"เสื้อ",price:200,image:"images/products/product2.png"},
-        {name:"พัดลม",price:30000,image:"images/products/product3.png"}
+    const products = [
+        { name: "เสื้อผ้า", price: 500, image: "images/products/product1.png" },
+        { name: "เสื้อ", price: 200, image: "images/products/product2.png" },
+        { name: "พัดลม", price: 30000, image: "images/products/product3.png" }
     ]
-    res.render('index',{products:products})  
+    res.render('index', { products: products })
 })
 
-router.get('/addForm',(req,res)=>{
+router.get('/addForm', (req, res) => {
     res.render('form')
 })
 
-router.get('/manage',(req,res)=>{
+router.get('/manage', (req, res) => {
     res.render('manage')
 })
 
@@ -84,22 +84,23 @@ router.get('/manage',(req,res)=>{
 //     res.render('form')
 // })
 
-router.post('/insert',(req,res)=>{
-    // console.log("test send POST method")
-    // console.log(req.body.name);
-    // console.log(req.body.price);
-    // console.log(req.body.image);
-    // console.log(req.body.description);
+router.post('/insert', async (req, res) => {
+
+    //callback fuction deprecated
     let data = new Product({
-        name:req.body.name,
-        price:req.body.price,
-        image:req.body.image,
-        description:req.body.description
+        name: req.body.name,
+        price: req.body.price,
+        image: req.body.image,
+        description: req.body.description
     })
-    Product.saveProduct(data,(err)=>{
-        if(err){console.log(err)} 
+    try {
+        Product.saveProduct(data)
         res.redirect('/')
-    })
+    } catch (err) {
+        console.log(err);
+    }
+
+
     // console.log(data)
     // res.render('form')
 
