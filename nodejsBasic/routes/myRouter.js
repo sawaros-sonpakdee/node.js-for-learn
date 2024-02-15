@@ -57,18 +57,45 @@
 // })
 // module.exports = router
 
+//จัดการ Routing
 const express = require('express')
 const router = express.Router()
+
+//เรียกใช้งานโมเดล
 const Product = require('../models/products')
 
-router.get('/', (req, res) => {
-    const name_data = "send propperty data"
-    const products = [
-        { name: "เสื้อผ้า", price: 500, image: "images/products/product1.png" },
-        { name: "เสื้อ", price: 200, image: "images/products/product2.png" },
-        { name: "พัดลม", price: 30000, image: "images/products/product3.png" }
-    ]
-    res.render('index', { products: products })
+//อัพโหลดไฟล์
+const multer = require('multer')
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/images/products')//ตำแหน่งจัดเก็บไฟล์
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + ".jpg")//เปลี่ยนชื่อไฟล์ ป้องกันชื่อซ้ำ
+    }
+})
+//เริ่มต้น upload
+const upload = multer({
+    storage: storage
+})
+
+router.get('/', async(req, res) => {
+    // const name_data = "send propperty data"
+    // const products = [
+    //     { name: "เสื้อผ้า", price: 500, image: "images/products/product1.png" },
+    //     { name: "เสื้อ", price: 200, image: "images/products/product2.png" },
+    //     { name: "พัดลม", price: 30000, image: "images/products/product3.png" }
+    // ]
+    // res.render('index', { products: products })
+
+    try {
+        const doc = await Product.find().exec();
+        // console.log(doc);
+        res.render('index',{products:doc})
+      } catch (error) {
+        console.error(error);
+      }
+
 })
 
 router.get('/addForm', (req, res) => {
@@ -84,26 +111,25 @@ router.get('/manage', (req, res) => {
 //     res.render('form')
 // })
 
-router.post('/insert', async (req, res) => {
+router.post('/insert', upload.single("image"), async (req, res) => {
 
     //callback fuction deprecated
-    let data = new Product({
-        name: req.body.name,
-        price: req.body.price,
-        image: req.body.image,
-        description: req.body.description
-    })
+
+    console.log(req.file);
     try {
+        let data = new Product({
+            name: req.body.name,
+            price: req.body.price,
+            image: req.file.filename,
+            description: req.body.description
+        })
         Product.saveProduct(data)
         res.redirect('/')
     } catch (err) {
         console.log(err);
     }
-
-
     // console.log(data)
     // res.render('form')
-
 })
 
 module.exports = router
