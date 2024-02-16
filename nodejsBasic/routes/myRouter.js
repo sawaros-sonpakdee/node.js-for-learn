@@ -78,8 +78,7 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage
 })
-
-router.get('/', async(req, res) => {
+router.get('/', async (req, res) => {
     // const name_data = "send propperty data"
     // const products = [
     //     { name: "เสื้อผ้า", price: 500, image: "images/products/product1.png" },
@@ -87,40 +86,41 @@ router.get('/', async(req, res) => {
     //     { name: "พัดลม", price: 30000, image: "images/products/product3.png" }
     // ]
     // res.render('index', { products: products })
-
     try {
         const doc = await Product.find().exec();
-        // console.log(doc);
-        res.render('index',{products:doc})
-      } catch (error) {
+        res.render('index', { products: doc })
+    } catch (error) {
         console.error(error);
-      }
-
+    }
 })
 
 router.get('/addForm', (req, res) => {
     res.render('form')
 })
 
-router.get('/manage',async (req, res) => {
+router.get('/manage', async (req, res) => {
     try {
         const doc = await Product.find().exec();
-        res.render('manage',{products:doc})
-      } catch (error) {
+        res.render('manage', { products: doc })
+    } catch (error) {
         console.error(error);
-      }
+    }
 
 })
 
-// router.get('/insert',(req,res)=>{
-//     console.log(req.query )
-//     res.render('form')
-// })
+router.get('/delete/:id', async (req, res) => {
+    console.log("Delete ID = ", req.params.id)
+    try {
+        Product.findByIdAndDelete(req.params.id,{useFindAndModify:false}).exec()
+        res.redirect('/manage')
+    } catch (error) {
+        console.error(error);
+    }
+})
 
 router.post('/insert', upload.single("image"), async (req, res) => {
 
     //callback fuction deprecated
-
     console.log(req.file);
     try {
         let data = new Product({
@@ -134,8 +134,34 @@ router.post('/insert', upload.single("image"), async (req, res) => {
     } catch (err) {
         console.log(err);
     }
-    // console.log(data)
     // res.render('form')
+})
+
+router.get('/:id',async (req,res) =>{
+    const product_id = req.params.id
+    // console.log(product_id)
+    try {
+        const result = await Product.findOne({_id:product_id}).exec();
+        res.render('product', { products: result })
+    } catch (error) {
+        console.error(error);
+    }
+})
+
+router.post('/edit',async(req,res)=>{
+    const edit_id = req.body.edit_id
+    console.log(edit_id)
+    try {
+        const result = await Product.findOne({_id:edit_id}).exec();
+        //นำข้อมูลที่ต้องการแก้ไข ไปแสดงในแบบฟอร์ม
+        res.render('edit',{product:result})
+        console.log(result)
+    } catch (error) {
+        console.log(error)        
+    }
+
+
+  
 })
 
 module.exports = router
