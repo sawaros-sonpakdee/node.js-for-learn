@@ -122,6 +122,7 @@ router.post('/insert', upload.single("image"), async (req, res) => {
 
     //callback fuction deprecated
     console.log(req.file);
+    //สร้างสินค้าชิ้นใหม่
     try {
         let data = new Product({
             name: req.body.name,
@@ -159,9 +160,24 @@ router.post('/edit',async(req,res)=>{
     } catch (error) {
         console.log(error)        
     }
-
-
-  
+})
+router.post('/update',(req,res)=>{
+    //ข้อมูลใหม่ที่ส่งมาจากฟอร์มแก้ไข
+        const Update_id = req.body.update_id
+        try {
+        let data = {
+            name: req.body.name,
+            price: req.body.price,
+            description: req.body.description
+        }
+        Product.findByIdAndUpdate(Update_id,data,{useFindAndModify:false}).exec()
+        res.redirect('/manage')
+    //    console.log("ข้อมูลที่ส่งจากฟอร์ม = ",data)
+    //    console.log("รหัสอัพเดต = ",update_id)
+    } catch (err) {
+        console.log(err);
+       
+    }
 })
 
 module.exports = router
