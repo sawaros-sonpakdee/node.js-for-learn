@@ -12,20 +12,22 @@
     </head>
     <body>
         <%- include('navbar') %>
+        <% if(product) {%>
         <div class="container">
             <div class="row">
                 <div class="col-lg-2"></div>
                 <div class="col-lg-8">
                     <div class="card mt-4">
-                        <img class="card-img-top img-fluid" src="images/products/<%=products.image%>" alt="" />
+                        <img class="card-img-top img-fluid" src="images/products/<%=product.image%>" alt="" />
                         <div class="card-body">
-                            <h3 class="card-title"><%= products.name%></h3>
-                            <h4><%= products.price%></h4>
-                            <p class="card-text">รายละเอียด : <%= products.description%></p>
+                            <h3 class="card-title"><%= product.name%></h3>
+                            <h4><%= product.price%></h4>
+                            <p class="card-text">รายละเอียด : <%= product.description%></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <% } %>
     </body>
 </html>

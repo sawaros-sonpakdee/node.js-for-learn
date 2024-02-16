@@ -143,7 +143,7 @@ router.get('/:id',async (req,res) =>{
     // console.log(product_id)
     try {
         const result = await Product.findOne({_id:product_id}).exec();
-        res.render('product', { products: result })
+        res.render('product', { product: result })
     } catch (error) {
         console.error(error);
     }
