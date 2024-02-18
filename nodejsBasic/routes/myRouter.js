@@ -78,14 +78,6 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage
 })
-//logout
-router.get('/logout', (req, res) => {
-    res.clearCookie('username')
-    res.clearCookie('password')
-    res.clearCookie('login')
-    res.redirect('manage')
-})
-
 router.get('/', async (req, res) => {
     // const name_data = "send propperty data"
     // const products = [
@@ -103,29 +95,15 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/addForm', (req, res) => {
-    if (req.cookies.login) {
-        res.render('form') //save data
-    }
-    else {
-        res.render('admin') // login
-    }
-
-    // res.render('form')
+    res.render('form')
 })
 
 router.get('/manage', async (req, res) => {
-
-    if (req.cookies.login) {
-         //save data
-        try {
-            const doc = await Product.find().exec();
-            res.render('manage', { products: doc })
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    else {
-        res.render('admin') // login
+    try {
+        const doc = await Product.find().exec();
+        res.render('manage', { products: doc })
+    } catch (error) {
+        console.error(error);
     }
 
 })
@@ -133,7 +111,7 @@ router.get('/manage', async (req, res) => {
 router.get('/delete/:id', async (req, res) => {
     console.log("Delete ID = ", req.params.id)
     try {
-        Product.findByIdAndDelete(req.params.id, { useFindAndModify: false }).exec()
+        Product.findByIdAndDelete(req.params.id,{useFindAndModify:false}).exec()
         res.redirect('/manage')
     } catch (error) {
         console.error(error);
@@ -160,62 +138,45 @@ router.post('/insert', upload.single("image"), async (req, res) => {
     // res.render('form')
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id',async (req,res) =>{
     const product_id = req.params.id
     // console.log(product_id)
     try {
-        const result = await Product.findOne({ _id: product_id }).exec();
+        const result = await Product.findOne({_id:product_id}).exec();
         res.render('product', { product: result })
     } catch (error) {
         console.error(error);
     }
 })
 
-router.post('/edit', async (req, res) => {
+router.post('/edit',async(req,res)=>{
     const edit_id = req.body.edit_id
     console.log(edit_id)
     try {
-        const result = await Product.findOne({ _id: edit_id }).exec();
+        const result = await Product.findOne({_id:edit_id}).exec();
         //นำข้อมูลที่ต้องการแก้ไข ไปแสดงในแบบฟอร์ม
-        res.render('edit', { product: result })
+        res.render('edit',{product:result})
         console.log(result)
     } catch (error) {
-        console.log(error)
+        console.log(error)        
     }
 })
-router.post('/update', (req, res) => {
+router.post('/update',(req,res)=>{
     //ข้อมูลใหม่ที่ส่งมาจากฟอร์มแก้ไข
-    const Update_id = req.body.update_id
-    try {
+        const Update_id = req.body.update_id
+        try {
         let data = {
             name: req.body.name,
             price: req.body.price,
             description: req.body.description
         }
-        Product.findByIdAndUpdate(Update_id, data, { useFindAndModify: false }).exec()
+        Product.findByIdAndUpdate(Update_id,data,{useFindAndModify:false}).exec()
         res.redirect('/manage')
-        //    console.log("ข้อมูลที่ส่งจากฟอร์ม = ",data)
-        //    console.log("รหัสอัพเดต = ",update_id)
+    //    console.log("ข้อมูลที่ส่งจากฟอร์ม = ",data)
+    //    console.log("รหัสอัพเดต = ",update_id)
     } catch (err) {
         console.log(err);
-
-    }
-})
-
-router.post('/login', (req, res) => {
-    const username = req.body.username
-    const password = req.body.password
-    const timeExpire = 30000 // 10 วินาที
-
-    if (username === "admin" && password === "123") {
-        //สร้าง cookie
-        res.cookie('username', username, { maxAge: timeExpire })
-        res.cookie('password', password, { maxAge: timeExpire })
-        res.cookie('login', true, { maxAge: timeExpire }) //true => login เข้าสู่ระบบหลังบ้าน
-        res.redirect('manage')
-    }
-    else {
-        res.render('404')
+       
     }
 })
 
