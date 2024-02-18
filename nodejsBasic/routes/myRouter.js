@@ -80,10 +80,14 @@ const upload = multer({
 })
 //logout
 router.get('/logout', (req, res) => {
-    res.clearCookie('username')
-    res.clearCookie('password')
-    res.clearCookie('login')
-    res.redirect('manage')
+    // res.clearCookie('username')
+    // res.clearCookie('password')
+    // res.clearCookie('login')
+    // res.redirect('manage')
+    req.session.destroy((err)=>{
+        res.redirect('manage')
+    })
+    
 })
 
 router.get('/', async (req, res) => {
@@ -103,20 +107,40 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/addForm', (req, res) => {
-    if (req.cookies.login) {
+    // if (req.cookies.login) {
+    //     res.render('form') //save data
+    // }
+    // else{
+    //     res.render('admin') //login
+    // }
+    // res.render('form')
+    // res.render('admin')
+    if (req.session.login) {
         res.render('form') //save data
     }
     else {
-        res.render('admin') // login
+        res.render('admin') //login
     }
-
-    // res.render('form')
 })
 
 router.get('/manage', async (req, res) => {
 
-    if (req.cookies.login) {
-         //save data
+    // if (req.cookies.login) {
+    //      //save data
+    //     try {
+    //         const doc = await Product.find().exec();
+    //         res.render('manage', { products: doc })
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
+    // else {
+    //     res.render('admin') // login
+    // }
+
+
+    if (req.session.login) {
+        //save data
         try {
             const doc = await Product.find().exec();
             res.render('manage', { products: doc })
@@ -127,6 +151,16 @@ router.get('/manage', async (req, res) => {
     else {
         res.render('admin') // login
     }
+
+
+    // try {
+    //     console.log("รหัส session = " ,req.sessionID)
+    //     console.log("ข้อมูล session = ")
+    //     const doc = await Product.find().exec();
+    //     res.render('manage', { products: doc })
+    // } catch (error) {
+    //     console.error(error);
+    // }
 
 })
 
@@ -160,11 +194,11 @@ router.post('/insert', upload.single("image"), async (req, res) => {
     // res.render('form')
 })
 
-router.get('/:id', async (req, res) => {
+router.get('index/:id', async (req, res) => {
     const product_id = req.params.id
     // console.log(product_id)
     try {
-        const result = await Product.findOne({ _id: product_id }).exec();
+        const result = await Product.findOne({ _id: product_id }).exec()
         res.render('product', { product: result })
     } catch (error) {
         console.error(error);
@@ -175,7 +209,7 @@ router.post('/edit', async (req, res) => {
     const edit_id = req.body.edit_id
     console.log(edit_id)
     try {
-        const result = await Product.findOne({ _id: edit_id }).exec();
+        const result = await Product.findOne({ _id: edit_id }).exec()
         //นำข้อมูลที่ต้องการแก้ไข ไปแสดงในแบบฟอร์ม
         res.render('edit', { product: result })
         console.log(result)
@@ -209,10 +243,17 @@ router.post('/login', (req, res) => {
 
     if (username === "admin" && password === "123") {
         //สร้าง cookie
-        res.cookie('username', username, { maxAge: timeExpire })
-        res.cookie('password', password, { maxAge: timeExpire })
-        res.cookie('login', true, { maxAge: timeExpire }) //true => login เข้าสู่ระบบหลังบ้าน
-        res.redirect('manage')
+        // res.cookie('username', username, { maxAge: timeExpire })
+        // res.cookie('password', password, { maxAge: timeExpire })
+        // res.cookie('login', true, { maxAge: timeExpire }) //true => login เข้าสู่ระบบหลังบ้าน
+        // res.redirect('manage')
+
+        //สร้าง session
+        req.session.username = username
+        req.session.password = password
+        req.session.login = true
+        req.session.cookie.maxAge = timeExpire
+        res.redirect('/manage')
     }
     else {
         res.render('404')
